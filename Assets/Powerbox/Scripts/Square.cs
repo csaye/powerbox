@@ -7,7 +7,8 @@ namespace Powerbox
     {
         Empty,
         Node,
-        Wire
+        Wire,
+        OpenWire
     }
 
     public enum SquareColor
