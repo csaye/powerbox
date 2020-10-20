@@ -1020,72 +1020,199 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18288cce7b2bd48c8848f245a662d5b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  square: {fileID: 8103284660574123617, guid: 1a5d59651c4cf47e2bb6f7baf3d8656c, type: 3}
   squares:
-  - {fileID: 1976898412}
-  - {fileID: 1870158818}
-  - {fileID: 1510234457}
-  - {fileID: 814885144}
-  - {fileID: 1990703328}
-  - {fileID: 519257677}
-  - {fileID: 12995067}
-  - {fileID: 1909535192}
-  - {fileID: 1676816000}
-  - {fileID: 1376254092}
-  - {fileID: 1264004782}
-  - {fileID: 813347892}
-  - {fileID: 808510177}
-  - {fileID: 1921366600}
-  - {fileID: 297107172}
-  - {fileID: 1390223921}
-  - {fileID: 463237733}
-  - {fileID: 229596497}
-  - {fileID: 2147412966}
-  - {fileID: 1921326500}
-  - {fileID: 1237682638}
-  - {fileID: 1904653450}
-  - {fileID: 1661305433}
-  - {fileID: 715036547}
-  - {fileID: 2100597283}
-  - {fileID: 544273970}
-  - {fileID: 1009049779}
-  - {fileID: 1681745712}
-  - {fileID: 1942355263}
-  - {fileID: 1062830311}
-  - {fileID: 1630818449}
-  - {fileID: 43140162}
-  - {fileID: 848274960}
-  - {fileID: 867989947}
-  - {fileID: 218921059}
-  - {fileID: 609689541}
-  - {fileID: 1834899023}
-  - {fileID: 1980434150}
-  - {fileID: 863914573}
-  - {fileID: 1727959281}
-  - {fileID: 1220519424}
-  - {fileID: 1838451609}
-  - {fileID: 560090039}
-  - {fileID: 1788267147}
-  - {fileID: 125468185}
-  - {fileID: 1830585764}
-  - {fileID: 1818558447}
-  - {fileID: 1248614795}
-  - {fileID: 221247938}
-  - {fileID: 2028045179}
-  - {fileID: 2110937232}
-  - {fileID: 974097214}
-  - {fileID: 578048836}
-  - {fileID: 81622508}
-  - {fileID: 246138165}
-  - {fileID: 1748011600}
-  - {fileID: 743504219}
-  - {fileID: 1776430238}
-  - {fileID: 1477787836}
-  - {fileID: 1505842713}
-  - {fileID: 1170728285}
-  - {fileID: 1724547334}
-  - {fileID: 1192045268}
-  - {fileID: 1164193768}
+  - spriteRenderer: {fileID: 1976898412}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1870158818}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1510234457}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 814885144}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1990703328}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 519257677}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 12995067}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1909535192}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1676816000}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1376254092}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1264004782}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 813347892}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 808510177}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1921366600}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 297107172}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1390223921}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 463237733}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 229596497}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 2147412966}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1921326500}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1237682638}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1904653450}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1661305433}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 715036547}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 2100597283}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 544273970}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1009049779}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1681745712}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1942355263}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1062830311}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1630818449}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 43140162}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 848274960}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 867989947}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 218921059}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 609689541}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1834899023}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1980434150}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 863914573}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1727959281}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1220519424}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1838451609}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 560090039}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1788267147}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 125468185}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1830585764}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1818558447}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1248614795}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 221247938}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 2028045179}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 2110937232}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 974097214}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 578048836}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 81622508}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 246138165}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1748011600}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 743504219}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1776430238}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1477787836}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1505842713}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1170728285}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1724547334}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1192045268}
+    type: 0
+    color: 0
+  - spriteRenderer: {fileID: 1164193768}
+    type: 0
+    color: 0
   mainCamera: {fileID: 519420031}
 --- !u!212 &491022654
 SpriteRenderer:
