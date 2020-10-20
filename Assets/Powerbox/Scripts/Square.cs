@@ -7,16 +7,7 @@ namespace Powerbox
     {
         Empty,
         Node,
-        Wire,
-        OpenWire
-    }
-
-    public enum SquareColor
-    {
-        None,
-        Red,
-        Green,
-        Blue
+        Wire
     }
 
     [Serializable]
@@ -24,9 +15,9 @@ namespace Powerbox
     {
         public SpriteRenderer spriteRenderer;
         public SquareType type;
-        public SquareColor color;
+        public Color color;
 
-        public Square(SpriteRenderer _spriteRenderer, SquareType _type, SquareColor _color)
+        public Square(SpriteRenderer _spriteRenderer, SquareType _type, Color _color)
         {
             spriteRenderer = _spriteRenderer;
             type = _type;

@@ -33,32 +33,63 @@ namespace Powerbox
             int lastSquareIndex = -1;
 
             // If out of bounds or not starter square, return
-            if (currentSquareIndex == -1 || IsSquareEmpty(currentSquareIndex) || IsSquareWire(currentSquareIndex)) yield break;
+            if (currentSquareIndex == -1 || !CanStartDrag(currentSquareIndex)) yield break;
             
+            Color dragColor = squares[currentSquareIndex].color;
+
             // While left mouse button pressed
             while (Input.GetMouseButton(0))
             {
                 currentSquareIndex = GetSquareIndex();
                 // If out of bounds, return
                 if (currentSquareIndex == -1) yield break;
-                // If same index as last check, skip check
-                if (currentSquareIndex == lastSquareIndex) continue;
                 // If dragged into new square, parse
-                lastSquareIndex = currentSquareIndex;
+                if (currentSquareIndex != lastSquareIndex)
+                {
+                    lastSquareIndex = currentSquareIndex;
+                    // If dragged onto nonempty space, return
+                    if (!IsSquareType(currentSquareIndex, SquareType.Empty)) yield break;
+                    // Otherwise set wire
+                    SetWire(currentSquareIndex, dragColor);
+                }
                 yield return null;
             }
         }
 
-        // Return if square at index is empty
-        private bool IsSquareEmpty(int index) => squares[index].type == SquareType.Empty;
+        // Sets square at given index to given type and color
+        private void SetWire(int index, Color color)
+        {
+            // Get square and set color
+            Square square = squares[index];
+            square.color = color;
+            SpriteRenderer squareRenderer = square.spriteRenderer;
+            // spriteRenderer.color = color;
+            // Get wire sprite based on surrounding wires
+            // Sprite sprite;
+            
+            // sprite = wireHorizontalSprite;
 
-        // Return if square at index is node
-        private bool IsSquareNode(int index) => squares[index].type == SquareType.Node;
+            // spriteRenderer.sprite = sprite;
+        }
 
-        // Return if square at index is wire
-        private bool IsSquareWire(int index) => squares[index].type == SquareType.Wire;
+        // Returns whether a drag can begin from given square index
+        private bool CanStartDrag(int index)
+        {
+            Square square = squares[index];
+            // Return false if empty square
+            if (square.type == SquareType.Empty) return false;
+            // Return true if wire open
+            if (square.type == SquareType.Wire)
+            {
 
-        // Return if square at index is open wire
-        private bool IsSquareOpenWire(int index) => squares[index].type == SquareType.OpenWire;
+            }
+            return true;
+        }
+
+        // Return if square at index is type
+        private bool IsSquareType(int index, SquareType type) => squares[index].type == type;
+
+        // Return if square above is wire of given color
+        // private bool IsColorWire
     }
 }
