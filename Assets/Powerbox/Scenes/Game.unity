@@ -707,15 +707,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5c6c88bdb26e34eaa9f0f5b3d3d0ea65, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &229596498
@@ -1067,196 +1067,196 @@ MonoBehaviour:
   squares:
   - spriteRenderer: {fileID: 1976898412}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1870158818}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1510234457}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 814885144}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1990703328}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 519257677}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 12995067}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1909535192}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1676816000}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1376254092}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1264004782}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 813347892}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 808510177}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1921366600}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 297107172}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1390223921}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 463237733}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 229596497}
-    type: 1
-    color: {r: 1, g: 0, b: 0, a: 1}
+    type: 0
+    connectedSquares: 
   - spriteRenderer: {fileID: 2147412966}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1921326500}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1237682638}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1904653450}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1661305433}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 715036547}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 2100597283}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 544273970}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1009049779}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1681745712}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1942355263}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1062830311}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1630818449}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 43140162}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 848274960}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 867989947}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 218921059}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 609689541}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1834899023}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1980434150}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 863914573}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1727959281}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1220519424}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1838451609}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 560090039}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1788267147}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 125468185}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1830585764}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1818558447}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1248614795}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 221247938}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 2028045179}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 2110937232}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 974097214}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 578048836}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 81622508}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 246138165}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1748011600}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 743504219}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1776430238}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1477787836}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1505842713}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1170728285}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1724547334}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1192045268}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   - spriteRenderer: {fileID: 1164193768}
     type: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    connectedSquares: 
   mainCamera: {fileID: 519420031}
   nodeSprites:
   - {fileID: 21300000, guid: 5c6c88bdb26e34eaa9f0f5b3d3d0ea65, type: 3}

@@ -20,8 +20,6 @@ namespace Powerbox
         [SerializeField] private Sprite[] nodeSprites = new Sprite[16];
         [SerializeField] private Sprite[] wireSprites = new Sprite[10];
 
-        private Color emptyColor = new Color(0, 0, 0, 0);
-
         // Returns square index based on current mouse position
         private int GetSquareIndex()
         {

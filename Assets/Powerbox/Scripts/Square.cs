@@ -39,7 +39,7 @@ namespace Powerbox
         public void Reset()
         {
             type = SquareType.Empty;
-            color = new Color(0, 0, 0, 0);
+            color = new Color(0, 0, 0);
             sprite = null;
             connectedSquares.Clear();
         }
