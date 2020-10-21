@@ -14,11 +14,66 @@ namespace Powerbox
 
     public class Gameboard : MonoBehaviour
     {
+        [Header("Attributes")]
+        [SerializeField] [Range(0, 4)] private int nodeCount = 0;
+        [SerializeField] private Color[] colors = null;
+        
         [Header("References")]
         [SerializeField] private Square[] squares = new Square[64];
         [SerializeField] private Camera mainCamera = null;
         [SerializeField] private Sprite[] nodeSprites = new Sprite[16];
         [SerializeField] private Sprite[] wireSprites = new Sprite[10];
+
+        private void Start()
+        {
+            GenerateGameboard();
+        }
+
+        // Returns a random number between low and high inclusive
+        private int Rand(int low, int high)
+        {
+            return UnityEngine.Random.Range(low, high + 1);
+        }
+
+        // Generates a default gameboard of nodes
+        private void GenerateGameboard()
+        {
+            int[] nodeIndices = new int[nodeCount];
+            for (int i = 0; i < nodeCount; i++)
+            {
+                // Get random index of position not on edge of board
+                int randomIndex = Rand(1, 6) + (8 * Rand(1, 6));
+                // Generate new index while touching existing node
+                while (NodeTouches(nodeIndices, i, randomIndex)) randomIndex = Rand(1, 6) + (8 * Rand(1, 6));
+                SetSquare(randomIndex, SquareType.Node, colors[i], nodeSprites[0]);
+                nodeIndices[i] = randomIndex;
+            }
+        }
+
+        // Returns whether a node in 
+        private bool NodeTouches(int[] nodeIndices, int currentIndex, int index)
+        {
+            for (int i = 0; i < currentIndex; i++)
+            {
+                int nodeIndex = nodeIndices[i];
+                // Above row
+                if (nodeIndex - 9 <= index && index <= nodeIndex - 7) return true;
+                // On row
+                if (nodeIndex - 1 <= index && index <= nodeIndex + 1) return true;
+                // Below row
+                if (nodeIndex + 7 <= index && index <= nodeIndex + 9) return true;
+            }
+            return false;
+        }
+
+        // Sets square at index to given values
+        private void SetSquare(int index, SquareType type, Color color, Sprite sprite)
+        {
+            Square square = squares[index];
+            square.type = type;
+            square.color = color;
+            square.sprite = sprite;
+        }
 
         // Returns square index based on current mouse position
         private int GetSquareIndex()

@@ -1064,6 +1064,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18288cce7b2bd48c8848f245a662d5b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nodeCount: 4
+  colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
   squares:
   - spriteRenderer: {fileID: 1976898412}
     type: 0
