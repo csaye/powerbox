@@ -15,12 +15,12 @@ namespace Powerbox
     public class Gameboard : MonoBehaviour
     {
         [Header("Attributes")]
-        [SerializeField] [Range(0, 4)] private int nodeCount = 0;
-        [SerializeField] private Color[] colors = null;
+        [Range(1, 4)] public int nodeCount = 4;
+        public Color[] colors = null;
         
         [Header("References")]
-        [SerializeField] private Square[] squares = new Square[64];
         [SerializeField] private Camera mainCamera = null;
+        [SerializeField] private Square[] squares = new Square[64];
         [SerializeField] private Sprite[] nodeSprites = new Sprite[16];
         [SerializeField] private Sprite[] wireSprites = new Sprite[10];
 
@@ -90,6 +90,8 @@ namespace Powerbox
 
         private void OnMouseDown()
         {
+            // Return if game over
+            if (ReceiverManager.gameOver) return;
             StartCoroutine(Drag());
         }
 
