@@ -16,10 +16,9 @@ namespace Powerbox
         [Header("References")]
         [SerializeField] private Square[] squares = new Square[64];
         [SerializeField] private Camera mainCamera = null;
-        // [SerializeField] private Sprite nodeSprite = null, nodeUpSprite = null, nodeRightSprite = null, nodeDownSprite = null, nodeLeftSprite = null;
-        // [SerializeField] private Sprite wireVerticalSprite = null, wireHorizontalSprite = null, wireUpSprite = null, wireRightSprite = null, wireDownSprite = null, wireLeftSprite = null;
-        // [SerializeField] private Sprite openWireUpSprite = null, openWireRightSprite = null, openWireDownSprite = null, openWireLeftSprite = null;
-        [SerializeField] private Sprite wireSprite = null;
+        [SerializeField] private Sprite nodeSprite = null, nodeUpSprite = null, nodeRightSprite = null, nodeDownSprite = null, nodeLeftSprite = null;
+        [SerializeField] private Sprite wireVerticalSprite = null, wireHorizontalSprite = null, wireUpSprite = null, wireRightSprite = null, wireDownSprite = null, wireLeftSprite = null;
+        [SerializeField] private Sprite openWireUpSprite = null, openWireRightSprite = null, openWireDownSprite = null, openWireLeftSprite = null;
 
         // Returns square index based on current mouse position
         private int GetSquareIndex()
@@ -61,18 +60,18 @@ namespace Powerbox
                 if (currentSquareIndex != lastSquareIndex)
                 {
                     Debug.Log(currentSquareIndex);
-                    lastSquareIndex = currentSquareIndex;
                     // If dragged onto nonempty space, return
                     if (!IsSquareType(currentSquareIndex, SquareType.Empty)) yield break;
                     // Otherwise set wire
-                    SetWire(currentSquareIndex, dragColor);
+                    SetWire(currentSquareIndex, dragColor, lastSquareIndex);
+                    lastSquareIndex = currentSquareIndex;
                 }
                 yield return null;
             }
         }
 
         // Sets square at given index to given type and color
-        private void SetWire(int index, Color color)
+        private void SetWire(int index, Color color, int lastIndex)
         {
             // Get square, set color and type
             Square square = squares[index];
@@ -80,31 +79,53 @@ namespace Powerbox
             square.type = SquareType.Wire;
             SpriteRenderer squareRenderer = square.spriteRenderer;
             squareRenderer.color = color;
-            // Get wire sprite based on surrounding wires
-            Sprite sprite;
-            
-            sprite = wireSprite;
+            // Set wire sprite
+            squareRenderer.sprite = GetSprite(index);
+            // Update last square sprite
+            Square lastSquare = squares[lastIndex];
+            lastSquare.spriteRenderer.sprite = GetSprite(lastIndex);
+        }
 
-            squareRenderer.sprite = sprite;
+        // Returns corresponding sprite for square index
+        private Sprite GetSprite(int index)
+        {
+            Square square = squares[index];
+            Color squareColor = square.color;
+            switch (square.type)
+            {
+                case SquareType.Empty:
+                    return null;
+                case SquareType.Node:
+                    if (IsColorWire(index, Direction.Up, squareColor)) return nodeUpSprite;
+                    if (IsColorWire(index, Direction.Right, squareColor)) return nodeRightSprite;
+                    if (IsColorWire(index, Direction.Down, squareColor)) return nodeDownSprite;
+                    if (IsColorWire(index, Direction.Left, squareColor)) return nodeLeftSprite;
+                    return nodeSprite;
+                // case SquareType.Wire:
+                //     return;
+            }
+            return null;
         }
 
         // Returns whether a drag can begin from given square index
         private bool CanStartDrag(int index, Color color)
         {
-            Square square = squares[index];
-            // Return false if empty square
-            if (square.type == SquareType.Empty) return false;
-            // Return true if wire open
-            if (square.type == SquareType.Wire)
-            {
-                int adjacentWires = 0;
-                if (IsColorWire(index, Direction.Up, color)) adjacentWires++;
-                if (IsColorWire(index, Direction.Right, color)) adjacentWires++;
-                if (IsColorWire(index, Direction.Down, color)) adjacentWires++;
-                if (IsColorWire(index, Direction.Left, color)) adjacentWires++;
-                return adjacentWires == 1;
-            }
-            return true;
+            // Return whether square is node or open wire
+            return IsSquareType(index, SquareType.Node) || IsOpenWire(index, color);
+        }
+
+        // Returns whether given index is that of an open wire
+        private bool IsOpenWire(int index, Color color)
+        {
+            // Return if not wire
+            if (!IsSquareType(index, SquareType.Wire)) return false;
+            // Check all wire directions
+            int adjacentWires = 0;
+            if (IsColorWire(index, Direction.Up, color)) adjacentWires++;
+            if (IsColorWire(index, Direction.Right, color)) adjacentWires++;
+            if (IsColorWire(index, Direction.Down, color)) adjacentWires++;
+            if (IsColorWire(index, Direction.Left, color)) adjacentWires++;
+            return adjacentWires == 1;
         }
 
         // Return if square at index is type
