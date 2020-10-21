@@ -28,11 +28,20 @@ namespace Powerbox
         }
         public List<int> connectedSquares = new List<int>();
 
-        public Square(SpriteRenderer _spriteRenderer, SquareType _type, Color _color)
+        public Square(SquareType _type, Color _color, Sprite _sprite)
         {
-            spriteRenderer = _spriteRenderer;
             type = _type;
             color = _color;
+            sprite = _sprite;
+        }
+
+        // Resets square to default state
+        public void Reset()
+        {
+            type = SquareType.Empty;
+            color = new Color(0, 0, 0, 0);
+            sprite = null;
+            connectedSquares.Clear();
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Powerbox
         [SerializeField] private Sprite[] nodeSprites = new Sprite[16];
         [SerializeField] private Sprite[] wireSprites = new Sprite[10];
 
+        private Color emptyColor = new Color(0, 0, 0, 0);
+
         // Returns square index based on current mouse position
         private int GetSquareIndex()
         {
@@ -59,21 +61,40 @@ namespace Powerbox
                 // If dragged into new square, parse
                 if (currentSquareIndex != lastSquareIndex)
                 {
-                    // If dragged onto nonempty space, return
-                    if (!IsSquareType(currentSquareIndex, SquareType.Empty)) yield break;
-                    // Update connected squares
-                    squares[lastSquareIndex].connectedSquares.Add(currentSquareIndex);
-                    squares[currentSquareIndex].connectedSquares.Add(lastSquareIndex);
-                    // Set wire
-                    SetWire(currentSquareIndex, dragColor, lastSquareIndex);
+                    // Get reference to squares
+                    Square currentSquare = squares[currentSquareIndex];
+                    Square lastSquare = squares[lastSquareIndex];
+
+                    // If dragged onto nonempty space, attempt to parse removal
+                    if (!IsSquareType(currentSquareIndex, SquareType.Empty))
+                    {
+                        // If incorrect color, break
+                        if (currentSquare.color != dragColor) yield break;
+                        // If not connected, break
+                        if (!currentSquare.connectedSquares.Contains(lastSquareIndex)) yield break;
+                        // Remove connections
+                        lastSquare.connectedSquares.Remove(currentSquareIndex);
+                        currentSquare.connectedSquares.Remove(lastSquareIndex);
+                        // Remove wire
+                        RemoveWire(lastSquareIndex, currentSquareIndex);
+                    }
+                    // If dragged onto empty square, set wire
+                    else
+                    {
+                        // Create connections
+                        lastSquare.connectedSquares.Add(currentSquareIndex);
+                        currentSquare.connectedSquares.Add(lastSquareIndex);
+                        // Set wire
+                        AddWire(currentSquareIndex, dragColor, lastSquareIndex);
+                    }
                     lastSquareIndex = currentSquareIndex;
                 }
                 yield return null;
             }
         }
 
-        // Sets square at given index to given type and color
-        private void SetWire(int index, Color color, int lastIndex)
+        // Adds wire at given index of given color
+        private void AddWire(int index, Color color, int indexToUpdate)
         {
             // Get square, set color and type
             Square square = squares[index];
@@ -83,8 +104,19 @@ namespace Powerbox
             // Set wire sprite
             square.sprite = GetSprite(index);
             // Update last square sprite
-            Square lastSquare = squares[lastIndex];
-            lastSquare.sprite = GetSprite(lastIndex);
+            Square lastSquare = squares[indexToUpdate];
+            lastSquare.sprite = GetSprite(indexToUpdate);
+        }
+
+        // Removes wire at given index
+        private void RemoveWire(int index, int indexToUpdate)
+        {
+            // Reset square
+            Square square = squares[index];
+            square.Reset();
+            // Update last square sprite
+            Square lastSquare = squares[indexToUpdate];
+            lastSquare.sprite = GetSprite(indexToUpdate);
         }
 
         // Returns corresponding sprite for square index
