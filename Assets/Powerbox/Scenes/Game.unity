@@ -7010,7 +7010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateInterval: 1
-  receiverSpawnChance: 0.25
+  receiverSpawnChance: 0.5
   countdownTime: 30
   maxActiveReceivers: 6
   disableSeconds: 3

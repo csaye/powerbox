@@ -30,7 +30,7 @@ namespace Powerbox
         private int score
         {
             get { return _score; }
-            set { if (!gameOver) score = value; }
+            set { if (!gameOver) _score = value; }
         }
 
         private void Start()
