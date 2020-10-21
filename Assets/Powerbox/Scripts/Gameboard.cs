@@ -16,9 +16,8 @@ namespace Powerbox
         [Header("References")]
         [SerializeField] private Square[] squares = new Square[64];
         [SerializeField] private Camera mainCamera = null;
-        [SerializeField] private Sprite nodeSprite = null, nodeUpSprite = null, nodeRightSprite = null, nodeDownSprite = null, nodeLeftSprite = null;
-        [SerializeField] private Sprite wireVerticalSprite = null, wireHorizontalSprite = null, wireUpSprite = null, wireRightSprite = null, wireDownSprite = null, wireLeftSprite = null;
-        [SerializeField] private Sprite openWireUpSprite = null, openWireRightSprite = null, openWireDownSprite = null, openWireLeftSprite = null;
+        [SerializeField] private Sprite[] nodeSprites = new Sprite[16];
+        [SerializeField] private Sprite[] wireSprites = new Sprite[10];
 
         // Returns square index based on current mouse position
         private int GetSquareIndex()
@@ -91,18 +90,43 @@ namespace Powerbox
         {
             Square square = squares[index];
             Color squareColor = square.color;
+            // Return null if square empty
+            if (square.type == SquareType.Empty) return null;
+            bool wireUp = IsColorWire(index, Direction.Up, squareColor);
+            bool wireRight = IsColorWire(index, Direction.Right, squareColor);
+            bool wireDown =  IsColorWire(index, Direction.Down, squareColor);
+            bool wireLeft = IsColorWire(index, Direction.Left, squareColor);
             switch (square.type)
             {
-                case SquareType.Empty:
-                    return null;
                 case SquareType.Node:
-                    if (IsColorWire(index, Direction.Up, squareColor)) return nodeUpSprite;
-                    if (IsColorWire(index, Direction.Right, squareColor)) return nodeRightSprite;
-                    if (IsColorWire(index, Direction.Down, squareColor)) return nodeDownSprite;
-                    if (IsColorWire(index, Direction.Left, squareColor)) return nodeLeftSprite;
-                    return nodeSprite;
-                // case SquareType.Wire:
-                //     return;
+                    if (wireUp && wireRight && wireDown && wireLeft) return nodeSprites[15];
+                    if (wireUp && wireRight && wireDown) return nodeSprites[14];
+                    if (wireRight && wireDown && wireLeft) return nodeSprites[13];
+                    if (wireDown && wireLeft && wireUp) return nodeSprites[12];
+                    if (wireLeft && wireUp && wireRight) return nodeSprites[11];
+                    if (wireUp && wireRight) return nodeSprites[10];
+                    if (wireRight && wireDown) return nodeSprites[9];
+                    if (wireDown && wireLeft) return nodeSprites[8];
+                    if (wireLeft && wireUp) return nodeSprites[7];
+                    if (wireUp && wireDown) return nodeSprites[6];
+                    if (wireLeft && wireRight) return nodeSprites[5];
+                    if (wireUp) return nodeSprites[4];
+                    if (wireRight) return nodeSprites[3];
+                    if (wireDown) return nodeSprites[2];
+                    if (wireLeft) return nodeSprites[1];
+                    return nodeSprites[0];
+                case SquareType.Wire:
+                    if (wireUp && wireRight) return wireSprites[9];
+                    if (wireRight && wireDown) return wireSprites[8];
+                    if (wireDown && wireLeft) return wireSprites[7];
+                    if (wireLeft && wireUp) return wireSprites[6];
+                    if (wireUp && wireDown) return wireSprites[5];
+                    if (wireLeft && wireRight) return wireSprites[4];
+                    if (wireUp) return wireSprites[3];
+                    if (wireRight) return wireSprites[2];
+                    if (wireDown) return wireSprites[1];
+                    if (wireLeft) return wireSprites[0];
+                    return null;
             }
             return null;
         }
