@@ -19,10 +19,13 @@ namespace Powerbox
         public Color[] colors = null;
         
         [Header("References")]
+        [SerializeField] private ReceiverManager receiverManager = null;
         [SerializeField] private Camera mainCamera = null;
         [SerializeField] private Square[] squares = new Square[64];
         [SerializeField] private Sprite[] nodeSprites = new Sprite[16];
         [SerializeField] private Sprite[] wireSprites = new Sprite[10];
+
+        private Coroutine dragCoroutine = null;
 
         private void Start()
         {
@@ -92,7 +95,13 @@ namespace Powerbox
         {
             // Return if game over
             if (ReceiverManager.gameOver) return;
-            StartCoroutine(Drag());
+            StopDragCoroutine();
+            dragCoroutine = StartCoroutine(Drag());
+        }
+
+        public void StopDragCoroutine()
+        {
+            if (dragCoroutine != null) StopCoroutine(dragCoroutine);
         }
 
         private IEnumerator Drag()
@@ -127,6 +136,8 @@ namespace Powerbox
                         if (currentSquare.color != dragColor) yield break;
                         // If not connected, break
                         if (!currentSquare.connectedSquares.Contains(lastSquareIndex)) yield break;
+                        // If last square type not wire, break
+                        if (lastSquare.type != SquareType.Wire) yield break;
                         // Remove connections
                         lastSquare.connectedSquares.Remove(currentSquareIndex);
                         currentSquare.connectedSquares.Remove(lastSquareIndex);
@@ -156,11 +167,10 @@ namespace Powerbox
             square.color = color;
             square.type = SquareType.Wire;
             square.color = color;
-            // Set wire sprite
-            square.sprite = GetSprite(index);
+            // Update wire sprite
+            UpdateSprite(index);
             // Update last square sprite
-            Square lastSquare = squares[indexToUpdate];
-            lastSquare.sprite = GetSprite(indexToUpdate);
+            UpdateSprite(indexToUpdate);
         }
 
         // Removes wire at given index
@@ -170,8 +180,13 @@ namespace Powerbox
             Square square = squares[index];
             square.Reset();
             // Update last square sprite
-            Square lastSquare = squares[indexToUpdate];
-            lastSquare.sprite = GetSprite(indexToUpdate);
+            UpdateSprite(indexToUpdate);
+        }
+
+        // Updates sprite for given square index
+        public void UpdateSprite(int index)
+        {
+            squares[index].sprite = GetSprite(index);
         }
 
         // Returns corresponding sprite for square index
@@ -262,21 +277,81 @@ namespace Powerbox
             switch (direction)
             {
                 case Direction.Up:
-                    if (index < 8) return false;
+                {
+                    // If in top row
+                    if (index < 8)
+                    {
+                        // Return false on corners, otherwise check for receiver
+                        if (index == 0 || index == 7) return false;
+                        int receiverIndex = index - 1;
+                        if (receiverManager.ReceiverActive(receiverIndex, color))
+                        {
+                            receiverManager.MakeReceiverConnection(index, receiverIndex);
+                            StopDragCoroutine();
+                            return true;
+                        }
+                        else return false;
+                    }
                     adjacent = index - 8;
                     break;
+                }
                 case Direction.Right:
-                    if (index % 8 == 7) return false;
+                {
+                    // If in rightmost column
+                    if (index % 8 == 7)
+                    {
+                        // Return false on corners, otherwise check for receiver
+                        if (index == 7 || index == 63) return false;
+                        int receiverIndex = ((index + 1) / 8) + 4;
+                        if (receiverManager.ReceiverActive(receiverIndex, color))
+                        {
+                            receiverManager.MakeReceiverConnection(index, receiverIndex);
+                            StopDragCoroutine();
+                            return true;
+                        }
+                        else return false;
+                    }
                     adjacent = index + 1;
                     break;
+                }
                 case Direction.Down:
-                    if (index > 55) return false;
+                {
+                    // If in bottom row
+                    if (index > 55)
+                    {
+                        // Return false on corners, otherwise check for receiver
+                        if (index == 56 || index == 63) return false;
+                        int receiverIndex = index - 45;
+                        if (receiverManager.ReceiverActive(receiverIndex, color))
+                        {
+                            receiverManager.MakeReceiverConnection(index, receiverIndex);
+                            StopDragCoroutine();
+                            return true;
+                        }
+                        else return false;
+                    }
                     adjacent = index + 8;
                     break;
+                }
                 case Direction.Left:
-                    if (index % 8 == 0) return false;
+                {
+                    // If in leftmost column
+                    if (index % 8 == 0)
+                    {
+                        // Return false on corners, otherwise check for receiver
+                        if (index == 0 || index == 56) return false;
+                        int receiverIndex = (index / 8) + 17;
+                        if (receiverManager.ReceiverActive(receiverIndex, color))
+                        {
+                            receiverManager.MakeReceiverConnection(index, receiverIndex);
+                            StopDragCoroutine();
+                            return true;
+                        }
+                        else return false;
+                    }
                     adjacent = index - 1;
                     break;
+                }
             }
             // Return whether square matches color connector
             return square.connectedSquares.Contains(adjacent);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Powerbox
         [SerializeField] [Range(0, 1)] private float receiverSpawnChance = 0.1f;
         [SerializeField] [Range(5, 60)] private int countdownTime = 30;
         [SerializeField] [Range(0, 24)] private int maxActiveReceivers = 6;
+        [SerializeField] [Range(0, 10)] private float disableSeconds = 3;
 
         [Header("References")]
         [SerializeField] private Gameboard gameboard = null;
@@ -55,6 +57,8 @@ namespace Powerbox
             {
                 // Parse and decrement countdown value
                 TextMeshProUGUI countdown = countdowns[i];
+                // Skip countdown if not enabled
+                if (!countdown.enabled) continue;
                 int countdownVal = int.Parse(countdown.text);
                 // If countdown has run out, end game
                 if (countdownVal <= 0)
@@ -92,9 +96,37 @@ namespace Powerbox
             return gameboard.colors[randomIndex];
         }
 
+        // Returns whether receiver with given index and color is active
+        public bool ReceiverActive(int index, Color color)
+        {
+            // If no active receiver with index, return false
+            if (!activeReceivers.Contains(index)) return false;
+            // Return whether receiver at index is color
+            return receivers[index].color == color;
+        }
+
+        // Makes a receiver connection between square index and receiver index
+        public void MakeReceiverConnection(int squareIndex, int receiverIndex)
+        {
+            StartCoroutine(DisableReceiver(squareIndex, receiverIndex));
+        }
+
+        private IEnumerator DisableReceiver(int squareIndex, int receiverIndex)
+        {
+            // Disable countdown
+            countdowns[receiverIndex].enabled = false;
+            yield return new WaitForSeconds(disableSeconds);
+            // Disable receiver and remove from active receivers
+            receivers[receiverIndex].enabled = false;
+            activeReceivers.Remove(receiverIndex);
+            // Update square sprite
+            gameboard.UpdateSprite(squareIndex);
+        }
+
         private void GameOver()
         {
             gameOver = true;
+            gameboard.StopDragCoroutine();
             Debug.Log("Game over!");
         }
     }

@@ -1945,6 +1945,8 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 0, g: 1, b: 1, a: 1}
   - {r: 1, g: 1, b: 0, a: 1}
+  receiverManager: {fileID: 1315893067}
+  mainCamera: {fileID: 519420031}
   squares:
   - spriteRenderer: {fileID: 1976898412}
     type: 0
@@ -2138,7 +2140,6 @@ MonoBehaviour:
   - spriteRenderer: {fileID: 1164193768}
     type: 0
     connectedSquares: 
-  mainCamera: {fileID: 519420031}
   nodeSprites:
   - {fileID: 21300000, guid: 5c6c88bdb26e34eaa9f0f5b3d3d0ea65, type: 3}
   - {fileID: 21300000, guid: 89957229d00f8430b842bebeae56e6f2, type: 3}
@@ -6321,9 +6322,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateInterval: 1
-  receiverSpawnChance: 0.1
+  receiverSpawnChance: 0.3
   countdownTime: 30
   maxActiveReceivers: 6
+  disableSeconds: 3
   gameboard: {fileID: 491022653}
   countdowns:
   - {fileID: 1630819962}
