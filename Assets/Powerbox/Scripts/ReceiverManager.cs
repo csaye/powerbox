@@ -16,6 +16,8 @@ namespace Powerbox
 
         [Header("References")]
         [SerializeField] private Gameboard gameboard = null;
+        [SerializeField] private CanvasGroup gameOverPopup = null;
+        [SerializeField] private TextMeshProUGUI scoreText = null;
         [SerializeField] private TextMeshProUGUI[] countdowns = new TextMeshProUGUI[24];
         [SerializeField] private SpriteRenderer[] receivers = new SpriteRenderer[24];
 
@@ -23,6 +25,13 @@ namespace Powerbox
         public List<int> activeReceivers { get; private set; } = new List<int>();
 
         private float lastCallTime;
+
+        private int _score = 0;
+        private int score
+        {
+            get { return _score; }
+            set { if (!gameOver) score = value; }
+        }
 
         private void Start()
         {
@@ -121,13 +130,21 @@ namespace Powerbox
             activeReceivers.Remove(receiverIndex);
             // Update square sprite
             gameboard.UpdateSprite(squareIndex);
+            // Increment score
+            score++;
         }
 
         private void GameOver()
         {
             gameOver = true;
             gameboard.StopDragCoroutine();
-            Debug.Log("Game over!");
+            // Enable game over popup
+            gameOverPopup.alpha = 1;
+            gameOverPopup.interactable = true;
+            gameOverPopup.blocksRaycasts = true;
+            // Update high score if necessary
+            if (score > PlayerPrefs.GetInt("HighScore", 0)) PlayerPrefs.SetInt("HighScore", score);
+            scoreText.text = $"Score: {score} | High score: {PlayerPrefs.GetInt("HighScore", 0)}";
         }
     }
 }

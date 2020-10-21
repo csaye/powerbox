@@ -38,7 +38,7 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: UI
+  - name: SubUI
     uniqueID: 1402733391
     locked: 0
   - name: Background
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: PostUI
+    uniqueID: 3202945655
     locked: 0
