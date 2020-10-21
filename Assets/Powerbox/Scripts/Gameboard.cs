@@ -59,10 +59,12 @@ namespace Powerbox
                 // If dragged into new square, parse
                 if (currentSquareIndex != lastSquareIndex)
                 {
-                    Debug.Log(currentSquareIndex);
                     // If dragged onto nonempty space, return
                     if (!IsSquareType(currentSquareIndex, SquareType.Empty)) yield break;
-                    // Otherwise set wire
+                    // Update connected squares
+                    squares[lastSquareIndex].connectedSquares.Add(currentSquareIndex);
+                    squares[currentSquareIndex].connectedSquares.Add(lastSquareIndex);
+                    // Set wire
                     SetWire(currentSquareIndex, dragColor, lastSquareIndex);
                     lastSquareIndex = currentSquareIndex;
                 }
@@ -77,38 +79,40 @@ namespace Powerbox
             Square square = squares[index];
             square.color = color;
             square.type = SquareType.Wire;
-            SpriteRenderer squareRenderer = square.spriteRenderer;
-            squareRenderer.color = color;
+            square.color = color;
             // Set wire sprite
-            squareRenderer.sprite = GetSprite(index, lastIndex);
+            square.sprite = GetSprite(index);
             // Update last square sprite
-            // Square lastSquare = squares[lastIndex];
-            // lastSquare.spriteRenderer.sprite = GetSprite(lastIndex);
+            Square lastSquare = squares[lastIndex];
+            lastSquare.sprite = GetSprite(lastIndex);
         }
 
         // Returns corresponding sprite for square index
-        private Sprite GetSprite(int index, int lastIndex)
+        private Sprite GetSprite(int index)
         {
             Square square = squares[index];
-            if (square.type == SquareType.Node) return GetNodeSprite(index);
-            if (square.type == SquareType.Wire) return GetWireSprite(index, lastIndex);
+            // Return null if square empty
+            if (square.type == SquareType.Empty) return null;
+            Color squareColor = square.color;
+
+            bool wireUp = IsConnected(index, Direction.Up, squareColor);
+            bool wireRight = IsConnected(index, Direction.Right, squareColor);
+            bool wireDown =  IsConnected(index, Direction.Down, squareColor);
+            bool wireLeft = IsConnected(index, Direction.Left, squareColor);
+
+            switch (square.type)
+            {
+                case SquareType.Node:
+                    return GetNodeSprite(wireUp, wireRight, wireDown, wireLeft);
+                case SquareType.Wire:
+                    return GetWireSprite(wireUp, wireRight, wireDown, wireLeft);
+            }
             return null;
         }
 
-        // Returns corresponsing node sprite for square index
-        private Sprite GetNodeSprite(int index)
+        // Returns corresponsing node sprite with given connections
+        private Sprite GetNodeSprite(bool wireUp, bool wireRight, bool wireDown, bool wireLeft)
         {
-            Square square = squares[index];
-            // Return null if square not node
-            if (square.type != SquareType.Node) return null;
-            Color squareColor = square.color;
-
-            bool wireUp = IsColorConnector(index, Direction.Up, squareColor);
-            bool wireRight = IsColorConnector(index, Direction.Right, squareColor);
-            bool wireDown =  IsColorConnector(index, Direction.Down, squareColor);
-            bool wireLeft = IsColorConnector(index, Direction.Left, squareColor);
-
-            // Parse node sprite based on adjacent wires
             if (wireUp && wireRight && wireDown && wireLeft) return nodeSprites[15];
             if (wireUp && wireRight && wireDown) return nodeSprites[14];
             if (wireRight && wireDown && wireLeft) return nodeSprites[13];
@@ -127,24 +131,9 @@ namespace Powerbox
             return nodeSprites[0];
         }
 
-        // Returns corresponsing wire sprite for square index
-        private Sprite GetWireSprite(int index, int lastIndex)
+        // Returns corresponsing wire sprite with given connections
+        private Sprite GetWireSprite(bool wireUp, bool wireRight, bool wireDown, bool wireLeft)
         {
-            Square square = squares[index];
-            // Return null if square not wire
-            if (square.type != SquareType.Wire) return null;
-
-            bool wireUp = false, wireRight = false, wireDown = false, wireLeft = false;
-            // Below last index
-            if (lastIndex == index - 8) wireUp = true;
-            // Above last index
-            else if (lastIndex == index + 8) wireDown = true;
-            // Right of last index
-            else if (lastIndex == index - 1) wireLeft = true;
-            // Left of last index
-            else if (lastIndex == index + 1) wireRight = true;
-
-            // Parse wire sprite based on adjacent wires
             if (wireUp && wireRight) return wireSprites[9];
             if (wireRight && wireDown) return wireSprites[8];
             if (wireDown && wireLeft) return wireSprites[7];
@@ -155,7 +144,7 @@ namespace Powerbox
             if (wireRight) return wireSprites[2];
             if (wireDown) return wireSprites[1];
             if (wireLeft) return wireSprites[0];
-            return null;
+            return null;   
         }
 
         // Returns whether a drag can begin from given square index
@@ -177,32 +166,33 @@ namespace Powerbox
         // Return if square at index is type
         private bool IsSquareType(int index, SquareType type) => squares[index].type == type;
 
-        // Return if square in direction is wire of given color
-        private bool IsColorConnector(int index, Direction direction, Color color)
+        // Return if square is connected in given direction
+        private bool IsConnected(int index, Direction direction, Color color)
         {
+            Square square = squares[index];
+            int adjacent = -1;
             // Return if out of bounds, otherwise get square
-            Square square = null;
             switch (direction)
             {
                 case Direction.Up:
                     if (index < 8) return false;
-                    square = squares[index - 8];
+                    adjacent = index - 8;
                     break;
                 case Direction.Right:
                     if (index % 8 == 7) return false;
-                    square = squares[index + 1];
+                    adjacent = index + 1;
                     break;
                 case Direction.Down:
                     if (index > 55) return false;
-                    square = squares[index + 8];
+                    adjacent = index + 8;
                     break;
                 case Direction.Left:
                     if (index % 8 == 0) return false;
-                    square = squares[index - 1];
+                    adjacent = index - 1;
                     break;
             }
             // Return whether square matches color connector
-            return (square.type == SquareType.Wire || square.type == SquareType.Node) && square.color == color;
+            return square.connectedSquares.Contains(adjacent);
         }
     }
 }
