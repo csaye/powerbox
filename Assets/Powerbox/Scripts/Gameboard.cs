@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Powerbox
@@ -79,55 +80,81 @@ namespace Powerbox
             SpriteRenderer squareRenderer = square.spriteRenderer;
             squareRenderer.color = color;
             // Set wire sprite
-            squareRenderer.sprite = GetSprite(index);
+            squareRenderer.sprite = GetSprite(index, lastIndex);
             // Update last square sprite
-            Square lastSquare = squares[lastIndex];
-            lastSquare.spriteRenderer.sprite = GetSprite(lastIndex);
+            // Square lastSquare = squares[lastIndex];
+            // lastSquare.spriteRenderer.sprite = GetSprite(lastIndex);
         }
 
         // Returns corresponding sprite for square index
-        private Sprite GetSprite(int index)
+        private Sprite GetSprite(int index, int lastIndex)
         {
             Square square = squares[index];
+            if (square.type == SquareType.Node) return GetNodeSprite(index);
+            if (square.type == SquareType.Wire) return GetWireSprite(index, lastIndex);
+            return null;
+        }
+
+        // Returns corresponsing node sprite for square index
+        private Sprite GetNodeSprite(int index)
+        {
+            Square square = squares[index];
+            // Return null if square not node
+            if (square.type != SquareType.Node) return null;
             Color squareColor = square.color;
-            // Return null if square empty
-            if (square.type == SquareType.Empty) return null;
-            bool wireUp = IsColorWire(index, Direction.Up, squareColor);
-            bool wireRight = IsColorWire(index, Direction.Right, squareColor);
-            bool wireDown =  IsColorWire(index, Direction.Down, squareColor);
-            bool wireLeft = IsColorWire(index, Direction.Left, squareColor);
-            switch (square.type)
-            {
-                case SquareType.Node:
-                    if (wireUp && wireRight && wireDown && wireLeft) return nodeSprites[15];
-                    if (wireUp && wireRight && wireDown) return nodeSprites[14];
-                    if (wireRight && wireDown && wireLeft) return nodeSprites[13];
-                    if (wireDown && wireLeft && wireUp) return nodeSprites[12];
-                    if (wireLeft && wireUp && wireRight) return nodeSprites[11];
-                    if (wireUp && wireRight) return nodeSprites[10];
-                    if (wireRight && wireDown) return nodeSprites[9];
-                    if (wireDown && wireLeft) return nodeSprites[8];
-                    if (wireLeft && wireUp) return nodeSprites[7];
-                    if (wireUp && wireDown) return nodeSprites[6];
-                    if (wireLeft && wireRight) return nodeSprites[5];
-                    if (wireUp) return nodeSprites[4];
-                    if (wireRight) return nodeSprites[3];
-                    if (wireDown) return nodeSprites[2];
-                    if (wireLeft) return nodeSprites[1];
-                    return nodeSprites[0];
-                case SquareType.Wire:
-                    if (wireUp && wireRight) return wireSprites[9];
-                    if (wireRight && wireDown) return wireSprites[8];
-                    if (wireDown && wireLeft) return wireSprites[7];
-                    if (wireLeft && wireUp) return wireSprites[6];
-                    if (wireUp && wireDown) return wireSprites[5];
-                    if (wireLeft && wireRight) return wireSprites[4];
-                    if (wireUp) return wireSprites[3];
-                    if (wireRight) return wireSprites[2];
-                    if (wireDown) return wireSprites[1];
-                    if (wireLeft) return wireSprites[0];
-                    return null;
-            }
+
+            bool wireUp = IsColorConnector(index, Direction.Up, squareColor);
+            bool wireRight = IsColorConnector(index, Direction.Right, squareColor);
+            bool wireDown =  IsColorConnector(index, Direction.Down, squareColor);
+            bool wireLeft = IsColorConnector(index, Direction.Left, squareColor);
+
+            // Parse node sprite based on adjacent wires
+            if (wireUp && wireRight && wireDown && wireLeft) return nodeSprites[15];
+            if (wireUp && wireRight && wireDown) return nodeSprites[14];
+            if (wireRight && wireDown && wireLeft) return nodeSprites[13];
+            if (wireDown && wireLeft && wireUp) return nodeSprites[12];
+            if (wireLeft && wireUp && wireRight) return nodeSprites[11];
+            if (wireUp && wireRight) return nodeSprites[10];
+            if (wireRight && wireDown) return nodeSprites[9];
+            if (wireDown && wireLeft) return nodeSprites[8];
+            if (wireLeft && wireUp) return nodeSprites[7];
+            if (wireUp && wireDown) return nodeSprites[6];
+            if (wireLeft && wireRight) return nodeSprites[5];
+            if (wireUp) return nodeSprites[4];
+            if (wireRight) return nodeSprites[3];
+            if (wireDown) return nodeSprites[2];
+            if (wireLeft) return nodeSprites[1];
+            return nodeSprites[0];
+        }
+
+        // Returns corresponsing wire sprite for square index
+        private Sprite GetWireSprite(int index, int lastIndex)
+        {
+            Square square = squares[index];
+            // Return null if square not wire
+            if (square.type != SquareType.Wire) return null;
+
+            bool wireUp = false, wireRight = false, wireDown = false, wireLeft = false;
+            // Below last index
+            if (lastIndex == index - 8) wireUp = true;
+            // Above last index
+            else if (lastIndex == index + 8) wireDown = true;
+            // Right of last index
+            else if (lastIndex == index - 1) wireLeft = true;
+            // Left of last index
+            else if (lastIndex == index + 1) wireRight = true;
+
+            // Parse wire sprite based on adjacent wires
+            if (wireUp && wireRight) return wireSprites[9];
+            if (wireRight && wireDown) return wireSprites[8];
+            if (wireDown && wireLeft) return wireSprites[7];
+            if (wireLeft && wireUp) return wireSprites[6];
+            if (wireUp && wireDown) return wireSprites[5];
+            if (wireLeft && wireRight) return wireSprites[4];
+            if (wireUp) return wireSprites[3];
+            if (wireRight) return wireSprites[2];
+            if (wireDown) return wireSprites[1];
+            if (wireLeft) return wireSprites[0];
             return null;
         }
 
@@ -143,20 +170,15 @@ namespace Powerbox
         {
             // Return if not wire
             if (!IsSquareType(index, SquareType.Wire)) return false;
-            // Check all wire directions
-            int adjacentWires = 0;
-            if (IsColorWire(index, Direction.Up, color)) adjacentWires++;
-            if (IsColorWire(index, Direction.Right, color)) adjacentWires++;
-            if (IsColorWire(index, Direction.Down, color)) adjacentWires++;
-            if (IsColorWire(index, Direction.Left, color)) adjacentWires++;
-            return adjacentWires == 1;
+            Square square = squares[index];
+            return Array.IndexOf(wireSprites, square.spriteRenderer.sprite) <= 3;
         }
 
         // Return if square at index is type
         private bool IsSquareType(int index, SquareType type) => squares[index].type == type;
 
         // Return if square in direction is wire of given color
-        private bool IsColorWire(int index, Direction direction, Color color)
+        private bool IsColorConnector(int index, Direction direction, Color color)
         {
             // Return if out of bounds, otherwise get square
             Square square = null;
@@ -179,8 +201,8 @@ namespace Powerbox
                     square = squares[index - 1];
                     break;
             }
-            // Return whether square matches color wire
-            return square.type == SquareType.Wire && square.color == color;
+            // Return whether square matches color connector
+            return (square.type == SquareType.Wire || square.type == SquareType.Node) && square.color == color;
         }
     }
 }
